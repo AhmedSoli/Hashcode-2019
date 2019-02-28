@@ -3,8 +3,8 @@ import itertools
 import logging
 import sys
 from collections import Counter
-from buckets import get_buckets
-from score import score
+from Buckets import get_buckets
+from Score import get_score
 from pprint import pprint
 
 def sort_for_orientation(photos):
