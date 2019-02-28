@@ -34,8 +34,20 @@ if __name__ == "__main__":
         logging.error('wrong number of args')
         exit()
     photos = parse(sys.argv[1])
-    
-    pprint(get_buckets(photos))
+    horizontals = []
+    verticals = []
+    for photo in photos:
+        if photo['direction'] == 'H':
+            horizontals.append(photo)
+        else:
+            verticals.append(photos)
+    buckets = get_buckets(horizontals)
+
+    bucket_sizes = []
+    for i, bucket in buckets.items():
+        bucket_sizes.append((i, len(bucket)))
+
+    print(list(map(lambda x: x[0], sorted(bucket_sizes, key=lambda x: x[1], reverse=True))))
     #oriented = sort_for_orientation(photos)
     #c = Counter(map(lambda x: len(x['tags']), photos))
     #print(c)
