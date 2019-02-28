@@ -21,4 +21,5 @@ for file in files:
 				vals[-1] = vals[-1].replace('\n','')
 				photo['tags'] = vals[2:]
 				photos.append(photo)
+			i += 1
 		# solve the data
