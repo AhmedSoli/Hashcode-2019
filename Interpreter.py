@@ -1,4 +1,3 @@
-from Grid import * 
 import os
 
 # read file
