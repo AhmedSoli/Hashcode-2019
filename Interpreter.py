@@ -1,15 +1,13 @@
-import os
+import logging
 
-# read file
-files = os.listdir('data')
-
-for file in files:
-	print("Working on file {0}".format(file))
-	with open('data/' + file,"r") as opened_file:
+def parse(filePath: str):
+	# read file
+	logging.info(f"Working on file {filePath}")
+	with open(filePath, 'r') as opened_file:
 		i = 0
 		# interprete the data
+		photos = []
 		for line in opened_file:
-			photos = []
 			if i == 0:
 				number_of_photos = line.split(" ")[0]
 				print(number_of_photos)
@@ -22,3 +20,4 @@ for file in files:
 				photos.append(photo)
 			i += 1
 		# solve the data
+	return photos
