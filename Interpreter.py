@@ -1,4 +1,5 @@
 import logging
+import random
 
 def parse(filePath: str):
 	# read file
@@ -24,19 +25,25 @@ def parse(filePath: str):
 	return photos
 
 def vertical_combinations(target_size,vertical_photos):
-	
 	combinations = []
+	photos = []
+
 	while(len(vertical_photos) > 1):
-		tags = list()
-		first_photo = vertical_photos.pop()
-		tags.extend(first_photo['tags'])
-		for key,second_photo in enumerate(vertical_photos):
-			if key == 1000:
-				break
-			tags_temp = tags
-			tags_temp.extend(second_photo['tags'])
-			if len(set(tags_temp)) <= target_size + 3 and len(set(tags_temp)) >= target_size - 3:
-				combinations.append((first_photo,second_photo))
-				break
-	return (combinations, vertical_photos)
+		[a,b] = random.choices(list(range(len(vertical_photos) - 1)),k=2)
+		combinations.append((vertical_photos[a],vertical_photos[b]))
+		if a < b:
+			del vertical_photos[b]
+			del vertical_photos[a]
+		else:
+			del vertical_photos[a]
+			del vertical_photos[b]
+
+	for combination in combinations:
+		photo = {}
+		photo['id'] = (combination[0]['id'],combination[1]['id'])
+		photo['tags'] = set(list(combination[0]['tags']) + list(combination[1]['tags']))
+		photos.append(photo)
+
+	return (photos, vertical_photos)
+
 

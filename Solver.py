@@ -41,7 +41,6 @@ if __name__ == "__main__":
 
     sorted_bucket_keys = list(map(lambda x: x[0], sorted(bucket_sizes, key=lambda x: x[1], reverse=True)))
 
-    pprint(buckets)
     for target_size in sorted_bucket_keys:
         (combinations, verticals) = vertical_combinations(target_size, verticals)
         for combination in combinations:
