@@ -7,8 +7,8 @@ files = os.listdir('data')
 for file in files:
 	print("Working on file {0}".format(file))
 	with open('data/' + file,"r") as opened_file:
-		# counter for lines
 		i = 0
+		# interprete the data
 		for line in opened_file:
 			photos = []
 			if i == 0:
@@ -20,6 +20,5 @@ for file in files:
 				photo['direction'] = vals[0]
 				vals[-1] = vals[-1].replace('\n','')
 				photo['tags'] = vals[2:]
-				print(photo)
-				break
-			i += 1
+				photos.append(photo)
+		# solve the data
