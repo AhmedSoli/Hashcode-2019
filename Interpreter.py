@@ -1,7 +1,8 @@
 from Grid import * 
+import os
 
 # read file
-files = ['a_example.in', 'b_small.in', 'c_medium.in', 'd_big.in']
+files = os.listdir('data')
 
 for file in files:
 	print("Working on file {0}".format(file))
@@ -9,14 +10,15 @@ for file in files:
 		# counter for lines
 		i = 0
 		for line in opened_file:
+			photos = []
 			if i == 0:
-				configs = line.split(' ')
-				# init new grid for storing the pizza
-				grid = Grid(configs,file)
+				number_of_photos = line.split(" ")[0]
+				print(number_of_photos)
 			else:
-				# remove \n from end of line and split all cells
-				cells = line.replace('\n','')
-				# append cells to the grid and calculate important numbers
-				grid.append(cells,i-1)
+				photo = {}
+				vals = line.split(' ')
+				photo['direction'] = vals[0]
+				photo['tags'] = vals[1:]
+				print(photo)
+				break
 			i += 1
-		grid.solve()
