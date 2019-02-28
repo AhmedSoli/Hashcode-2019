@@ -1,4 +1,4 @@
-from Interpreter import parse
+from Interpreter import parse,vertical_combinations
 import itertools
 import logging
 import sys
@@ -28,6 +28,7 @@ def common_tags(photoLeft, photoRight) -> int:
 
 def score(pL, pR) -> int:
     return min(common_tags(pL, pR), in_left_but_not_in_right(pL, pR), in_right_but_not_in_left(pL, pR))
+    
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -40,14 +41,20 @@ if __name__ == "__main__":
         if photo['direction'] == 'H':
             horizontals.append(photo)
         else:
-            verticals.append(photos)
+            verticals.append(photo)
+
     buckets = get_buckets(horizontals)
 
     bucket_sizes = []
     for i, bucket in buckets.items():
         bucket_sizes.append((i, len(bucket)))
 
-    print(list(map(lambda x: x[0], sorted(bucket_sizes, key=lambda x: x[1], reverse=True))))
+    sorted_bucket_keys = list(map(lambda x: x[0], sorted(bucket_sizes, key=lambda x: x[1], reverse=True)))
+
+
+    for target_size in sorted_bucket_keys:
+        (combinations, verticals) = vertical_combinations(target_size, verticals)
+        pprint(combinations)
     #oriented = sort_for_orientation(photos)
     #c = Counter(map(lambda x: len(x['tags']), photos))
     #print(c)
