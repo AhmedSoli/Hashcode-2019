@@ -22,3 +22,19 @@ def parse(filePath: str):
 			i += 1
 		# solve the data
 	return photos
+
+def vertical_combinations(target_size,vertical_photos):
+	
+	combinations = []
+	while(len(vertical_photos) > 1):
+		tags = set()
+		first_photo = vertical_photos.pop()
+		tags.add(first_photo['tags'])
+		for second_photo in vertical_photos:
+			tags_temp = tags
+			tags_temp.add(second_photo['tags'])
+			if len(tags_temp) == target_size:
+				combination.append((first_photo,second_photo))
+				break
+
+
