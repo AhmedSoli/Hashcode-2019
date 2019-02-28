@@ -4,6 +4,7 @@ import logging
 import sys
 from collections import Counter
 from buckets import get_buckets
+from score import score
 from pprint import pprint
 
 def sort_for_orientation(photos):
@@ -17,18 +18,7 @@ def sort_for_orientation(photos):
     return {'H': h, 'V': v}
 
 
-def in_left_but_not_in_right(photoLeft, photoRight) -> int:
-    return len(set(photoLeft['tags']) - set(photoRight['tags']))
 
-def in_right_but_not_in_left(photoLeft, photoRight) -> int:
-    return len(set(photoLeft['tags']) - set(photoRight['tags']))
-
-def common_tags(photoLeft, photoRight) -> int:
-    return len(set(photoLeft['tags']) & set(photoRight['tags']))
-
-def score(pL, pR) -> int:
-    return min(common_tags(pL, pR), in_left_but_not_in_right(pL, pR), in_right_but_not_in_left(pL, pR))
-    
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -51,10 +41,13 @@ if __name__ == "__main__":
 
     sorted_bucket_keys = list(map(lambda x: x[0], sorted(bucket_sizes, key=lambda x: x[1], reverse=True)))
 
-
+    pprint(buckets)
     for target_size in sorted_bucket_keys:
         (combinations, verticals) = vertical_combinations(target_size, verticals)
-        pprint(combinations)
+        for combination in combinations:
+            buckets[len(combination['tags'])].append(combination)
+
+    pprint(buckets)
     #oriented = sort_for_orientation(photos)
     #c = Counter(map(lambda x: len(x['tags']), photos))
     #print(c)
