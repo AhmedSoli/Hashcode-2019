@@ -27,15 +27,16 @@ def vertical_combinations(target_size,vertical_photos):
 	
 	combinations = []
 	while(len(vertical_photos) > 1):
-		tags = set()
+		tags = []
 		first_photo = vertical_photos.pop()
-		tags.add(first_photo['tags'])
-		for second_photo in vertical_photos:
+		tags.extend(first_photo['tags'])
+		for key,second_photo in enumerate(vertical_photos):
+			if key == 1000:
+				break
 			tags_temp = tags
-			tags_temp.add(second_photo['tags'])
-			if len(tags_temp) == target_size:
+			tags_temp.extend(second_photo['tags'])
+			if len(tags_temp) >= target_size - 3 and len(tags_temp) <= target_size + 3:
 				combination.append((first_photo,second_photo))
 				break
+
 	return combinations
-
-
