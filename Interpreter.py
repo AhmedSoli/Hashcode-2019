@@ -18,7 +18,8 @@ for file in files:
 				photo = {}
 				vals = line.split(' ')
 				photo['direction'] = vals[0]
-				photo['tags'] = vals[1:]
+				vals[-1] = vals[-1].replace('\n','')
+				photo['tags'] = vals[2:]
 				print(photo)
 				break
 			i += 1
