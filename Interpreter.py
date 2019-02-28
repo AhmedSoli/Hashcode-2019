@@ -36,5 +36,6 @@ def vertical_combinations(target_size,vertical_photos):
 			if len(tags_temp) == target_size:
 				combination.append((first_photo,second_photo))
 				break
+	return combinations
 
 
