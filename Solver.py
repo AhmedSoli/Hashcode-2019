@@ -24,3 +24,4 @@ def solve(photos,tags):
                     break
 
     return slides
+

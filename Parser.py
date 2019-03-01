@@ -1,9 +1,23 @@
+def get_tag_ids(tag_ids,tags):
+	ids = []
+
+	for tag in tags:
+		if tag in tag_ids:
+			ids.append(tag_ids[tag])
+		else:
+			tag_ids['last_id'] += 1
+			tag_ids[tag] = tag_ids['last_id']
+			ids.append(tag_ids['last_id'])
+
+	return tag_ids,ids
+
 def parse(file: str):
 	print("Working on {}".format(file))
 	with open(file, 'r') as opened_file:
 		i = 0
 		photos = {}
 		tags = set()
+		tag_ids = {'last_id':-1}
 		for line in opened_file:
 			if i == 0:
 				number_of_photos = line.split(" ")[0]
@@ -11,9 +25,12 @@ def parse(file: str):
 			else:
 				photo = {}
 				vals = line.split(' ')
+				vals[-1] = vals[-1].replace("\n","")
+
 				photo['orient'] = vals[0]
 				photo['tags'] = int(vals[1])
 				photo['id'] = i - 1
+				tag_ids, photo['tag_ids'] = get_tag_ids(tag_ids,vals[2:]) 
 
 				if photo['tags'] not in photos:
 					photos[photo['tags']] = {'H':[],'V':[]}
@@ -27,7 +44,6 @@ def parse(file: str):
 	return photos,tags
 
 def generate_solution(slides,file):
-	print(slides)
 	with open("solution/" + file,"w+") as sol:
 		sol.write("{}\n".format(len(slides)))
 		for slide in slides:
