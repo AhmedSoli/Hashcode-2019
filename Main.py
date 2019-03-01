@@ -1,7 +1,7 @@
 import os
 from Solver import * 
 from Parser import * 
-from multiprocessing import Pool
+from multiprocessing import *
 
 def compute(file):
 	photos,tags = parse('data/' + file)
@@ -9,5 +9,5 @@ def compute(file):
 	generate_solution(slides,file)
 
 files = os.listdir('data')
-p = Pool(len(files))
+p = Pool(1)
 print(p.map(compute, files))

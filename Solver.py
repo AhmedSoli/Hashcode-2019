@@ -1,8 +1,9 @@
 from Score import * 
 
 def solve(photos,tags):
+    tags = sorted(tags.keys())
     slides = []
-    for key,tag in enumerate(tags):
+    for key,tags in enumerate(tags):
         while(True):
             if len(photos[tag]['H']) > 0:
                 # handle horizontal photo
@@ -29,6 +30,8 @@ def solve(photos,tags):
 
 def solve_alt(photos,tags):
     slides = []
+    tags = sorted(tags.keys())
+    print(tags)
     for key,tag in enumerate(tags):
         print(tag)
         while(True):

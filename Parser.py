@@ -1,3 +1,5 @@
+from pprint import *
+
 def get_tag_ids(tag_ids,tags):
 	ids = set()
 
@@ -16,7 +18,7 @@ def parse(file: str):
 	with open(file, 'r') as opened_file:
 		i = 0
 		photos = {}
-		tags = set()
+		tags = {}
 		tag_ids = {'last_id':-1}
 		for line in opened_file:
 			if i == 0:
@@ -36,12 +38,12 @@ def parse(file: str):
 					photos[photo['tags']] = {'H':[],'V':[]}
 
 				photos[photo['tags']][photo['orient']].append(photo)
+				tags[photo['tags']] = tags.get(photo['tags'],{'H':0,'V':0})
+				tags[photo['tags']][photo['orient']] += 1
 
-				tags.add(photo['tags'])
 			i += 1
-		tags = sorted(list(tags))
 	print("Done reading {} photos from {}".format(i-1,file))
-	print("Tags {}".format(tags))
+	pprint("Tags {}".format(tags))
 	return photos,tags
 
 def generate_solution(slides,file):
