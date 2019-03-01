@@ -1,13 +1,13 @@
 def get_tag_ids(tag_ids,tags):
-	ids = []
+	ids = set()
 
 	for tag in tags:
 		if tag in tag_ids:
-			ids.append(tag_ids[tag])
+			ids.add(tag_ids[tag])
 		else:
 			tag_ids['last_id'] += 1
 			tag_ids[tag] = tag_ids['last_id']
-			ids.append(tag_ids['last_id'])
+			ids.add(tag_ids['last_id'])
 
 	return tag_ids,ids
 
@@ -31,7 +31,7 @@ def parse(file: str):
 				photo['tags'] = int(vals[1])
 				photo['id'] = i - 1
 				tag_ids, photo['tag_ids'] = get_tag_ids(tag_ids,vals[2:]) 
-
+				# photo['tag_ids'] = set(vals[2:])
 				if photo['tags'] not in photos:
 					photos[photo['tags']] = {'H':[],'V':[]}
 
@@ -41,6 +41,7 @@ def parse(file: str):
 			i += 1
 		tags = sorted(list(tags))
 	print("Done reading {} photos from {}".format(i-1,file))
+	print("Tags {}".format(tags))
 	return photos,tags
 
 def generate_solution(slides,file):
