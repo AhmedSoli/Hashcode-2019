@@ -33,3 +33,5 @@ def generate_solution(slides,file):
 		for slide in slides:
 			if isinstance(slide['id'],int):
 				sol.write("{}\n".format(slide['id']))
+			else:
+				sol.write("{} {}\n".format(slide['id'][0],slide['id'][1]))
