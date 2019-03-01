@@ -67,3 +67,4 @@ def solve_alt(photos,tags):
                             slides.append(slide)
                 else:
                     break
+    return slides
