@@ -17,4 +17,4 @@ class Slide:
 		return self.slide[item]
 
 	def __str__(self):
-		return("-------ID {} tags {} tag_ids {}---------".format(self.id,self.tags,self.tag_ids))
+		return("ID {} tags {} tag_ids {}".format(self.id,self.tags,self.tag_ids))
