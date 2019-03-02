@@ -60,7 +60,7 @@ class Solver:
             while(len(self.photos[tag]['H']) > 0):
                 best = {'key':0,'score':-1,'tag':tag}
                 # add more i here to optimise
-                for i in [0]:
+                for i in [-1,0,1]:
                     if i+key < len(self.tags) and i+key > 0:
                         for key_np,slide in enumerate(self.photos[self.tags[key+i]]["H"]):
                             score = get_score(slide,slides[-1])
@@ -82,16 +82,30 @@ class Solver:
         print("H finished for",self.file)
 
         for key,tag in enumerate(self.tags):
-            found_early = 0
             found = 0
-            while(len(self.photos[tag]['V']) > 1):    # handle vertical photos
-                one = self.photos[tag]['V'].pop()
-                two = self.photos[tag]['V'].pop()
-                slides.append(Slide(one,two))
+            # handle vertical photos
+            while(len(self.photos[tag]['V'])) > 1:
+                best = {'keys':[],'score':-1,'tag':tag}
+                n = len(self.photos[tag]['V'])
+                for i in range(n * 2):
+                    [key_one,key_two] = sample(range(n),2)
+                    slide = Slide(self.photos[tag]['V'][key_one],self.photos[tag]['V'][key_two])
+                    score = get_score(slide,slides[-1])
+                    if score > best['score']:
+                        best['score'] = score
+                        best['keys'] = [key_one,key_two]
+                        best['tag'] = tag
+                        best['slide'] = slide
+
+                for key_temp in sorted(best['keys'],reverse=True):
+                    del self.photos[tag]['V'][key_temp]
+                
                 found += 1
                 if found % 1000 == 0:
                     print("File {} Orient {} Tag {} Slides {} Found {} Early {} Remaining {}".format(self.file,"V",tag,len(slides),found,found_early,len(self.photos[tag]['H'])))
                 
+                slides.append(best['slide'])
+
         print("V finished for",self.file)
 
         print("------------------------------")

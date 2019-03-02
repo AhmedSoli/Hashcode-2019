@@ -18,4 +18,4 @@ print("Files {}".format(files))
 # init pool
 p = Pool(1)
 # map compute function to pool
-print(p.map(compute, files[-1:]))
+print(p.map(compute, files[0:-1]))
