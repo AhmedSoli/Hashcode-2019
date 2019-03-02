@@ -16,6 +16,6 @@ files.sort(key = lambda s: os.stat('../data/' + s).st_size)
 # print sorted array for verification
 print("Files {}".format(files))
 # init pool
-p = Pool(1)
+p = Pool(5)
 # map compute function to pool
 print(p.map(compute, files[0:-1]))
