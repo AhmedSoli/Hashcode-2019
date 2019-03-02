@@ -43,7 +43,6 @@ def parse(file: str):
 
 			i += 1
 	print("Done reading {} photos from {}".format(i-1,file))
-	pprint("Tags {}".format(tags))
 	return photos,tags
 
 def generate_solution(slides,file):

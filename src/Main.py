@@ -5,8 +5,8 @@ from multiprocessing import *
 
 def compute(file):
 	photos,tags = parse('../data/' + file)
-	solver = Solver(photos,tags)
-	slides = solver.solve()
+	solver = Solver(photos,tags,file)
+	slides = solver.solve_complex()
 	generate_solution(slides,file)
 
 files = os.listdir('../data')
